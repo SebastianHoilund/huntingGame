@@ -3,5 +3,5 @@ void setup() {
 }
 
 void draw() {
-    
+    circle(mouseX, mouseY, 50);
 }

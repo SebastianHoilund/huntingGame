@@ -19,7 +19,7 @@ public void setup() {
 }
 
 public void draw() {
-    
+    circle(mouseX, mouseY, 50);
 }
   public void settings() {  size(1920,1080); }
   static public void main(String[] passedArgs) {
