@@ -1,7 +1,13 @@
 void setup() {
-    size(1920,1080);
+
+    fullScreen();
+    // size(1920,1080);
+
 }
 
 void draw() {
-    circle(mouseX, mouseY, 50);
+
+    background(200, 200, 200);
+
 }
+

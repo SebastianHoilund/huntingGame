@@ -15,13 +15,26 @@ import java.io.IOException;
 public class huntingGame extends PApplet {
 
 public void setup() {
+
     
+    // size(1920,1080);
+
 }
 
 public void draw() {
-    circle(mouseX, mouseY, 50);
+
+    background(200, 200, 200);
+
 }
-  public void settings() {  size(1920,1080); }
+
+
+class Planteeder extends Animal {
+    
+}
+class Rovdyr extends Animal {
+    
+}
+  public void settings() {  fullScreen(); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "huntingGame" };
     if (passedArgs != null) {
