@@ -1,3 +1,0 @@
-class Planteeder extends Animal {
-    
-}

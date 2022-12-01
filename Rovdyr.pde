@@ -1,3 +1,0 @@
-class Rovdyr extends Animal {
-    
-}
