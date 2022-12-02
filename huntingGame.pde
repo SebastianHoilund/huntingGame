@@ -14,7 +14,7 @@ boolean wasEaten = false;
 int whoEaten; 
 
 int timer = millis();
-int counter = 2000;
+int counter = 15000;
 
 void setup() {
 
