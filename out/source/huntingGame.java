@@ -19,7 +19,7 @@ Animal hunter;
 ArrayList<Animal> prey = new ArrayList<Animal>();
 ArrayList<Float> close = new ArrayList<Float>();
 
-int startingPrey = 5; 
+int startingPrey = 1; 
 
 int targetObject;
 
@@ -30,25 +30,26 @@ boolean wasEaten = false;
 int whoEaten; 
 
 int timer = millis();
-int counter = 2000;
+int counter = 5000;
 
 int maxPrey = 10;
+int hunterstartspeed = 3;
+int preystartspeed = 3;
 
 public void setup() {
 
     
     // size(1920,1080);
-    // size(640,480);
-    frameRate(60);
+    // size(640, 480);
 
-    hunter = new Hunter(new PVector(250, 250), 0.9f, 3);
+    hunter = new Hunter(new PVector(width/2, height/2-350), 5, hunterstartspeed);
     
     for (int i = 0; i < startingPrey; ++i) {
-        prey.add(new Prey(new PVector(random(width), random(height)), 0.9f, 3));
+
+        prey.add(new Prey(new PVector(random(width), random(height)), 0.9f, preystartspeed));
         close.add(0.1f);
 
     }
-
 
 } 
 
@@ -75,7 +76,7 @@ public void draw() {
         if (newPrey.isEaten(hunter)) {
             wasEaten = true; 
             whoEaten = i;
-            print(" " + i + " blev spist ");
+            // print(" " + i + " blev spist ");
         }
 
         close.set(i, dist(hunter.location.x, hunter.location.y, newPrey.location.x, newPrey.location.y));
@@ -83,19 +84,28 @@ public void draw() {
         if (oldD > newD) {
             oldD = newD;
             targetObject = i;
+
         }
 
     }
 
     if (prey.size() != maxPrey) {
+
         if (millis() - timer > counter) {
-            prey.add(new Prey(new PVector(random(width), random(height)), 0.9f, 3));
-            print(" " + prey.size() + " ");
+
+            prey.add(new Prey(new PVector(random(width), random(height)), 0.9f, preystartspeed));
+
+            // print(" " + prey.size() + " ");
             close.add(0.1f);
             timer = millis(); 
+
         }
+
+    } else {
+        timer = millis(); 
+        int counter = 0;
+
     }
-    
 
     hunter.update();
     hunter.move(prey.get(targetObject));
@@ -104,11 +114,13 @@ public void draw() {
     oldD = width*height;
 
     if (wasEaten) {
+
         wasEaten = false;
         int preySize = prey.size()-1;
         prey.set(whoEaten, prey.get(preySize));
         prey.remove(preySize); 
         close.remove(preySize); 
+        
     }
 
 } 
@@ -183,7 +195,7 @@ class Hunter extends Animal {
         velocity = new PVector(0, 0);
         acceleration = new PVector(0, 0);
 
-        range = 150;
+        range = 250;
 
         r = 5;
         maxforce = _maxforce;
@@ -207,21 +219,21 @@ class Hunter extends Animal {
 
     public void move(Animal target) {
 
-        if (location.x < 100) {
+        if (location.x < 25) {
             desired = new PVector(maxspeed, velocity.y);
 
-        } else if (location.x > width-100) {
+        } else if (location.x > width-25) {
             desired = new PVector(-maxspeed, velocity.y);
 
-        } else if (location.y < 100) {
+        } else if (location.y < 25) {
             desired = new PVector(maxspeed, velocity.x);
 
-        } else if (location.y > height-100) {
+        } else if (location.y > height-25) {
             desired = new PVector(-maxspeed, velocity.x);
 
         } else if (dist(location.x, location.y, target.location.x, target.location.y) < range) {
             seek(target);
-            maxspeed *= 1.005f;
+            maxspeed *= 1.0005f;
 
         } else if (millis() - timer > counter) {
             wander();
@@ -261,7 +273,7 @@ class Prey extends Animal {
         velocity = new PVector(0, 0);
         acceleration = new PVector(0, 0);
 
-        range = 100;
+        range = 150;
 
         r = 5;
         maxforce = _maxforce;
@@ -285,21 +297,21 @@ class Prey extends Animal {
 
     public void move(Animal target) {
 
-        if (location.x < 100) {
+        if (location.x < 25) {
             desired = new PVector(maxspeed, velocity.y);
 
-        } else if (location.x > width-100) {
+        } else if (location.x > width-25) {
             desired = new PVector(-maxspeed, velocity.y);
 
-        } else if (location.y < 100) {
+        } else if (location.y < 25) {
             desired = new PVector(maxspeed, velocity.x);
 
-        } else if (location.y > height-100) {
+        } else if (location.y > height-25) {
             desired = new PVector(-maxspeed, velocity.x);
 
         } else if (dist(location.x, location.y, target.location.x, target.location.y) < range) {
             flee(target);
-            maxspeed *= 1.01f;
+            maxspeed *= 1.001f;
 
         } else if (millis() - timer > counter) {
             wander();

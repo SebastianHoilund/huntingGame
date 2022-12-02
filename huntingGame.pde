@@ -3,7 +3,7 @@ Animal hunter;
 ArrayList<Animal> prey = new ArrayList<Animal>();
 ArrayList<Float> close = new ArrayList<Float>();
 
-int startingPrey = 5; 
+int startingPrey = 1; 
 
 int targetObject;
 
@@ -14,25 +14,26 @@ boolean wasEaten = false;
 int whoEaten; 
 
 int timer = millis();
-int counter = 2000;
+int counter = 5000;
 
 int maxPrey = 10;
+int hunterstartspeed = 3;
+int preystartspeed = 3;
 
 void setup() {
 
     fullScreen();
     // size(1920,1080);
-    // size(640,480);
-    frameRate(60);
+    // size(640, 480);
 
-    hunter = new Hunter(new PVector(250, 250), 0.9, 3);
+    hunter = new Hunter(new PVector(width/2, height/2-350), 5, hunterstartspeed);
     
     for (int i = 0; i < startingPrey; ++i) {
-        prey.add(new Prey(new PVector(random(width), random(height)), 0.9, 3));
+
+        prey.add(new Prey(new PVector(random(width), random(height)), 0.9, preystartspeed));
         close.add(0.1);
 
     }
-
 
 } 
 
@@ -59,7 +60,7 @@ void draw() {
         if (newPrey.isEaten(hunter)) {
             wasEaten = true; 
             whoEaten = i;
-            print(" " + i + " blev spist ");
+            // print(" " + i + " blev spist ");
         }
 
         close.set(i, dist(hunter.location.x, hunter.location.y, newPrey.location.x, newPrey.location.y));
@@ -67,19 +68,28 @@ void draw() {
         if (oldD > newD) {
             oldD = newD;
             targetObject = i;
+
         }
 
     }
 
     if (prey.size() != maxPrey) {
+
         if (millis() - timer > counter) {
-            prey.add(new Prey(new PVector(random(width), random(height)), 0.9, 3));
-            print(" " + prey.size() + " ");
+
+            prey.add(new Prey(new PVector(random(width), random(height)), 0.9, preystartspeed));
+
+            // print(" " + prey.size() + " ");
             close.add(0.1);
             timer = millis(); 
+
         }
+
+    } else {
+        timer = millis(); 
+        int counter = 0;
+
     }
-    
 
     hunter.update();
     hunter.move(prey.get(targetObject));
@@ -88,11 +98,13 @@ void draw() {
     oldD = width*height;
 
     if (wasEaten) {
+
         wasEaten = false;
         int preySize = prey.size()-1;
         prey.set(whoEaten, prey.get(preySize));
         prey.remove(preySize); 
         close.remove(preySize); 
+        
     }
 
 } 
