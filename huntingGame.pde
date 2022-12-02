@@ -26,7 +26,7 @@ void setup() {
     // size(1920,1080);
     // size(640, 480);
 
-    hunter = new Hunter(new PVector(width/2, height/2-350), 5, hunterstartspeed);
+    hunter = new Hunter(new PVector(width/2, height/2-350), 0.9, hunterstartspeed);
     
     for (int i = 0; i < startingPrey; ++i) {
 

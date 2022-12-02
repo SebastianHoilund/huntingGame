@@ -42,7 +42,7 @@ public void setup() {
     // size(1920,1080);
     // size(640, 480);
 
-    hunter = new Hunter(new PVector(width/2, height/2-350), 5, hunterstartspeed);
+    hunter = new Hunter(new PVector(width/2, height/2-350), 0.9f, hunterstartspeed);
     
     for (int i = 0; i < startingPrey; ++i) {
 
@@ -233,7 +233,7 @@ class Hunter extends Animal {
 
         } else if (dist(location.x, location.y, target.location.x, target.location.y) < range) {
             seek(target);
-            maxspeed *= 1.0005f;
+            maxspeed *= 1.01f;
 
         } else if (millis() - timer > counter) {
             wander();
@@ -311,7 +311,7 @@ class Prey extends Animal {
 
         } else if (dist(location.x, location.y, target.location.x, target.location.y) < range) {
             flee(target);
-            maxspeed *= 1.001f;
+            maxspeed *= 1.005f;
 
         } else if (millis() - timer > counter) {
             wander();

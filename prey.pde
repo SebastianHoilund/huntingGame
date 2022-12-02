@@ -44,7 +44,7 @@ class Prey extends Animal {
 
         } else if (dist(location.x, location.y, target.location.x, target.location.y) < range) {
             flee(target);
-            maxspeed *= 1.001;
+            maxspeed *= 1.005;
 
         } else if (millis() - timer > counter) {
             wander();

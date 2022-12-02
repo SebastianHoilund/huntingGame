@@ -44,7 +44,7 @@ class Hunter extends Animal {
 
         } else if (dist(location.x, location.y, target.location.x, target.location.y) < range) {
             seek(target);
-            maxspeed *= 1.0005;
+            maxspeed *= 1.01;
 
         } else if (millis() - timer > counter) {
             wander();
