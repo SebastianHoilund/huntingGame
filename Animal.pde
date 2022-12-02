@@ -13,6 +13,9 @@ abstract class Animal {
     float r;
     float maxforce;
     float maxspeed;
+    float oldmaxspeed;
+
+    float range;
 
     // Our standard “Euler integration” motion model
     void update() {
@@ -31,18 +34,19 @@ abstract class Animal {
 
     }
 
-    void seek(Animal target) {    }
-    void flee(Animal target) {    }
-    void move(Animal target) {    }
-    void wander() {    }
+    void seek(Animal target) {  }
+    void flee(Animal target) {  }
+    void move(Animal target) {  }
+    void wander() { }
+    boolean isEaten(Animal target) { return false; }
 
-    void display() {
+    void display(int red, int green, int blue) {
 
         // Vehicle is a triangle pointing in
         // the direction of velocity; since it is drawn
         // pointing up, we rotate it an additional 90 degrees.
         float theta = velocity.heading() + PI/2;
-        fill(175);
+        fill(red, green, blue);
         stroke(0);
         pushMatrix();
         translate(location.x,location.y);

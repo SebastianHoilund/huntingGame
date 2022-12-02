@@ -6,9 +6,12 @@ class Hunter extends Animal {
         velocity = new PVector(0, 0);
         acceleration = new PVector(0, 0);
 
+        range = 150;
+
         r = 5;
         maxforce = _maxforce;
         maxspeed = _maxspeed;
+        oldmaxspeed = _maxspeed; 
         desired = new PVector(width/2, height/2);
 
         timer = millis();
@@ -27,28 +30,30 @@ class Hunter extends Animal {
 
     void move(Animal target) {
 
-        if (location.x < 25) {
+        if (location.x < 100) {
             desired = new PVector(maxspeed, velocity.y);
 
-        } else if (location.x > width-25) {
+        } else if (location.x > width-100) {
             desired = new PVector(-maxspeed, velocity.y);
 
-        } else if (location.y < 25) {
+        } else if (location.y < 100) {
             desired = new PVector(maxspeed, velocity.x);
 
-        } else if (location.y > height-25) {
+        } else if (location.y > height-100) {
             desired = new PVector(-maxspeed, velocity.x);
 
-        } else if (dist(location.x, location.y, target.location.x, target.location.y) < 50) {
+        } else if (dist(location.x, location.y, target.location.x, target.location.y) < range) {
             seek(target);
-            print("Seek ");
+            maxspeed *= 1.005;
 
         } else if (millis() - timer > counter) {
             wander();
             timer = millis(); 
-            print("Wander Hunter ");
 
         } 
+
+        noFill();
+        circle(location.x, location.y, range);
 
         PVector steer = PVector.sub(desired,velocity);
         steer.limit(maxforce);
@@ -57,6 +62,8 @@ class Hunter extends Animal {
     }
     
     void wander() {
+
+        maxspeed = oldmaxspeed;
         
         float wradius = 25; 
         float wx = wradius*cos(random(360));
