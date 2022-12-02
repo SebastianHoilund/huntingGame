@@ -30,12 +30,14 @@ boolean wasEaten = false;
 int whoEaten; 
 
 int timer = millis();
-int counter = 15000;
+int counter = 2000;
+
+int maxPrey = 10;
 
 public void setup() {
 
-    // fullScreen();
     
+    // size(1920,1080);
     // size(640,480);
     frameRate(60);
 
@@ -57,11 +59,11 @@ public void draw() {
     fill(100);
     textAlign(CENTER);
     textSize(55);
-    text("New prey in:", width/2, height/2-165); 
+    text("New prey in:", width/2, height/2-190); 
     text("Amount of preys:", width/2, height/2+15); 
     textSize(70);
     text(millis()/1000 - timer/1000 + " / " + counter/1000, width/2, height/2-100);
-    text(prey.size() + " / 10", width/2, height/2+100); 
+    text(prey.size() + " / " + maxPrey, width/2, height/2+100); 
 
     for (int i = prey.size()-1; i >= 0; --i) {
         Animal newPrey = prey.get(i);
@@ -85,7 +87,7 @@ public void draw() {
 
     }
 
-    if (prey.size()-1 != 9) {
+    if (prey.size() != maxPrey) {
         if (millis() - timer > counter) {
             prey.add(new Prey(new PVector(random(width), random(height)), 0.9f, 3));
             print(" " + prey.size() + " ");
@@ -339,7 +341,7 @@ class Prey extends Animal {
     }
 
 }
-  public void settings() {  size(1920,1080); }
+  public void settings() {  fullScreen(); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "huntingGame" };
     if (passedArgs != null) {
