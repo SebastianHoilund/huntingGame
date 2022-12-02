@@ -6,6 +6,9 @@ abstract class Animal {
     PVector acceleration;
     PVector desired; 
 
+    int timer;
+    int counter;
+
     // Additional variable for size
     float r;
     float maxforce;
@@ -28,8 +31,10 @@ abstract class Animal {
 
     }
 
-    void seek(Animal target) {}
-    void flee(Animal target) {}
+    void seek(Animal target) {    }
+    void flee(Animal target) {    }
+    void move(Animal target) {    }
+    void wander() {    }
 
     void display() {
 

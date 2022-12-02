@@ -18,13 +18,14 @@ Animal hunter, prey;
 
 public void setup() {
 
-    
+    // fullScreen();
     frameRate(60);
     // size(1920,1080);
-
-    hunter = new Hunter(new PVector(0, 0), 0.9f, 3);
     
-    prey = new Prey(new PVector(100, 100), 0.9f, 5);
+
+    hunter = new Hunter(new PVector(250, 250), 0.9f, 3);
+    
+    prey = new Prey(new PVector(width-250, height-250), 0.9f, 3.3f);
 
 }
 
@@ -33,11 +34,11 @@ public void draw() {
     background(200, 200, 200);
 
     hunter.update();
-    hunter.seek(prey);
+    hunter.move(prey);
     hunter.display();
 
     prey.update();
-    prey.flee(hunter);
+    prey.move(hunter);
     prey.display();
 
 }
@@ -49,6 +50,9 @@ abstract class Animal {
     PVector velocity;
     PVector acceleration;
     PVector desired; 
+
+    int timer;
+    int counter;
 
     // Additional variable for size
     float r;
@@ -72,8 +76,10 @@ abstract class Animal {
 
     }
 
-    public void seek(Animal target) {}
-    public void flee(Animal target) {}
+    public void seek(Animal target) {    }
+    public void flee(Animal target) {    }
+    public void move(Animal target) {    }
+    public void wander() {    }
 
     public void display() {
 
@@ -109,6 +115,9 @@ class Hunter extends Animal {
         maxspeed = _maxspeed;
         desired = new PVector(width/2, height/2);
 
+        timer = millis();
+        counter = 500;
+
     }
 
     // Our seek steering force algorithm
@@ -118,9 +127,48 @@ class Hunter extends Animal {
         desired.normalize();
         desired.mult(maxspeed);
 
+    }
+
+    public void move(Animal target) {
+
+        if (location.x < 25) {
+            desired = new PVector(maxspeed, velocity.y);
+
+        } else if (location.x > width-25) {
+            desired = new PVector(-maxspeed, velocity.y);
+
+        } else if (location.y < 25) {
+            desired = new PVector(maxspeed, velocity.x);
+
+        } else if (location.y > height-25) {
+            desired = new PVector(-maxspeed, velocity.x);
+
+        } else if (dist(location.x, location.y, target.location.x, target.location.y) < 50) {
+            seek(target);
+            print("Seek ");
+
+        } else if (millis() - timer > counter) {
+            wander();
+            timer = millis(); 
+            print("Wander Hunter ");
+
+        } 
+
         PVector steer = PVector.sub(desired,velocity);
         steer.limit(maxforce);
         applyForce(steer);
+
+    }
+    
+    public void wander() {
+        
+        float wradius = 25; 
+        float wx = wradius*cos(random(360));
+        float wy = wradius*sin(random(360));
+
+        desired.sub(new PVector(wx, wy));
+        desired.normalize();
+        desired.mult(maxspeed);
 
     }
 
@@ -138,6 +186,9 @@ class Prey extends Animal {
         maxspeed = _maxspeed;
         desired = new PVector(width/2, height/2);
 
+        timer = millis();
+        counter = 500;
+
     }
     
     // Our seek steering force algorithm
@@ -147,13 +198,53 @@ class Prey extends Animal {
         desired.normalize();
         desired.mult(maxspeed);
 
+    }
+
+    public void move(Animal target) {
+
+        if (location.x < 25) {
+            desired = new PVector(maxspeed, velocity.y);
+
+        } else if (location.x > width-25) {
+            desired = new PVector(-maxspeed, velocity.y);
+
+        } else if (location.y < 25) {
+            desired = new PVector(maxspeed, velocity.x);
+
+        } else if (location.y > height-25) {
+            desired = new PVector(-maxspeed, velocity.x);
+
+        } else if (dist(location.x, location.y, target.location.x, target.location.y) < 50) {
+            flee(target);
+            print("Flee ");
+
+        } else if (millis() - timer > counter) {
+            wander();
+            timer = millis(); 
+            print("Wander Prey ");
+
+        } 
+
         PVector steer = PVector.sub(desired,velocity);
         steer.limit(maxforce);
         applyForce(steer);
 
     }
+    
+    public void wander() {
+        
+        float wradius = 25; 
+        float wx = wradius*cos(random(360));
+        float wy = wradius*sin(random(360));
+
+        desired.sub(new PVector(wx, wy));
+        desired.normalize();
+        desired.mult(maxspeed);
+
+    }
+
 }
-  public void settings() {  fullScreen(); }
+  public void settings() {  size(640,480); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "huntingGame" };
     if (passedArgs != null) {
