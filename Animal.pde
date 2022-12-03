@@ -17,6 +17,8 @@ abstract class Animal {
 
     float range;
 
+    boolean hunting;
+
     // Our standard “Euler integration” motion model
     void update() {
 

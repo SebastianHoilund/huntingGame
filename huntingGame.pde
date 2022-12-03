@@ -3,8 +3,6 @@ Animal hunter;
 ArrayList<Animal> prey = new ArrayList<Animal>();
 ArrayList<Float> close = new ArrayList<Float>();
 
-int startingPrey = 1; 
-
 int targetObject;
 
 float oldD = width*height;
@@ -16,7 +14,9 @@ int whoEaten;
 int timer = millis();
 int counter = 5000;
 
-int maxPrey = 10;
+int startingPrey = 5; 
+
+int maxPrey = 15;
 int hunterstartspeed = 3;
 int preystartspeed = 3;
 
@@ -43,10 +43,10 @@ void draw() {
 
     fill(100);
     textAlign(CENTER);
-    textSize(55);
-    text("New prey in:", width/2, height/2-190); 
-    text("Amount of preys:", width/2, height/2+15); 
     textSize(70);
+    text("New prey in:", width/2, height/2-190); 
+    text("Amount of preys:", width/2, height/2+15);
+    textSize(55);
     text(millis()/1000 - timer/1000 + " / " + counter/1000, width/2, height/2-100);
     text(prey.size() + " / " + maxPrey, width/2, height/2+100); 
 
