@@ -20,6 +20,8 @@ int maxPrey = 15;
 int hunterstartspeed = 3;
 int preystartspeed = 3;
 
+int hunterKills = 0;
+
 void setup() {
 
     fullScreen();

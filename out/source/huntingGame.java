@@ -36,6 +36,8 @@ int maxPrey = 15;
 int hunterstartspeed = 3;
 int preystartspeed = 3;
 
+int hunterKills = 0;
+
 public void setup() {
 
     
@@ -244,31 +246,31 @@ class Hunter extends Animal {
             timer = millis(); 
 
         } 
-
-        if (dist(location.x, location.y, target.location.x, target.location.y) < range-10) {
-            hunting = true; 
-
-        } else if (dist(location.x, location.y, target.location.x, target.location.y) > range-10) {
-            hunting = false; 
-
-        } 
         
         fill(100);
         textAlign(CENTER);
         textSize(70);
         text("Hunter behaviour:", width/2, height/2-380); 
 
-        if (hunting) {
+        if (dist(location.x, location.y, target.location.x, target.location.y) < range) {
+            hunting = true; 
             fill(255, 0, 0);
             textSize(55);
             text("Hunting", width/2, height/2-310);
 
-        } else {
+        } else if (dist(location.x, location.y, target.location.x, target.location.y) > range) {
+            hunting = false; 
             fill(0, 255, 0);
             textSize(55);
             text("Wandering", width/2, height/2-310);
+
+        } 
+
+        // if (hunting) {
+
+        // } else {
             
-        }
+        // }
 
         noFill();
         circle(location.x, location.y, range);
