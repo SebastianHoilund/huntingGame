@@ -21,7 +21,7 @@ class Hunter extends Animal {
 
     }
 
-    // Our seek steering force algorithm
+    // Hunters seek funktion
     void seek(Animal target) {
 
         desired = PVector.sub(target.location,location);
@@ -32,6 +32,7 @@ class Hunter extends Animal {
 
     void move(Animal target) {
 
+        // Her laves kanterne på skærmen
         if (location.x < 25) {
             desired = new PVector(maxspeed, velocity.y);
 
@@ -82,18 +83,7 @@ class Hunter extends Animal {
 
     }
     
-    void wander() {
-
-        maxspeed = oldmaxspeed;
-        
-        float wradius = 25; 
-        float wx = wradius*cos(random(360));
-        float wy = wradius*sin(random(360));
-
-        desired.sub(new PVector(wx, wy));
-        desired.normalize();
-        desired.mult(maxspeed);
-
-    }
+    
+    
 
 }

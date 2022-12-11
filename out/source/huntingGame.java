@@ -31,18 +31,14 @@ int timer = millis();
 int counter = 5000;
 
 int startingPrey = 5; 
-
 int maxPrey = 15;
+
 int hunterstartspeed = 3;
 int preystartspeed = 3;
-
-int hunterKills = 0;
 
 public void setup() {
 
     
-    // size(1920,1080);
-    // size(640, 480);
 
     hunter = new Hunter(new PVector(width/2, height/2-350), 0.9f, hunterstartspeed);
     
@@ -78,7 +74,6 @@ public void draw() {
         if (newPrey.isEaten(hunter)) {
             wasEaten = true; 
             whoEaten = i;
-            // print(" " + i + " blev spist ");
         }
 
         close.set(i, dist(hunter.location.x, hunter.location.y, newPrey.location.x, newPrey.location.y));
@@ -97,7 +92,6 @@ public void draw() {
 
             prey.add(new Prey(new PVector(random(width), random(height)), 0.9f, preystartspeed));
 
-            // print(" " + prey.size() + " ");
             close.add(0.1f);
             timer = millis(); 
 
@@ -128,7 +122,7 @@ public void draw() {
 } 
 abstract class Animal {
 
-
+    // Her specificeres de variabler der skal bruges
     PVector location;
     PVector velocity;
     PVector acceleration;
@@ -137,7 +131,6 @@ abstract class Animal {
     int timer;
     int counter;
 
-    // Additional variable for size
     float r;
     float maxforce;
     float maxspeed;
@@ -147,7 +140,6 @@ abstract class Animal {
 
     boolean hunting;
 
-    // Our standard “Euler integration” motion model
     public void update() {
 
         velocity.add(acceleration);
@@ -157,24 +149,17 @@ abstract class Animal {
 
     }
 
-    // Newton’s second law; we could divide by mass if we wanted.
-    public void applyForce(PVector force) {
-
-        acceleration.add(force);
-
-    }
-
+    // Her kaldes de funktioner subclassesne skal bruge 
+    public void wander() { }
     public void seek(Animal target) {  }
     public void flee(Animal target) {  }
     public void move(Animal target) {  }
-    public void wander() { }
+    public void applyForce(PVector force) { acceleration.add(force); }
     public boolean isEaten(Animal target) { return false; }
 
+    // Her tegnes dyrne, og værdierne (red, green, blue) bliver specificeret i subclasesne. 
     public void display(int red, int green, int blue) {
 
-        // Vehicle is a triangle pointing in
-        // the direction of velocity; since it is drawn
-        // pointing up, we rotate it an additional 90 degrees.
         float theta = velocity.heading() + PI/2;
         fill(red, green, blue);
         stroke(0);
@@ -214,7 +199,7 @@ class Hunter extends Animal {
 
     }
 
-    // Our seek steering force algorithm
+    // Hunters seek funktion
     public void seek(Animal target) {
 
         desired = PVector.sub(target.location,location);
@@ -225,6 +210,7 @@ class Hunter extends Animal {
 
     public void move(Animal target) {
 
+        // Her laves kanterne på skærmen
         if (location.x < 25) {
             desired = new PVector(maxspeed, velocity.y);
 
@@ -266,12 +252,6 @@ class Hunter extends Animal {
 
         } 
 
-        // if (hunting) {
-
-        // } else {
-            
-        // }
-
         noFill();
         circle(location.x, location.y, range);
 
@@ -281,19 +261,8 @@ class Hunter extends Animal {
 
     }
     
-    public void wander() {
-
-        maxspeed = oldmaxspeed;
-        
-        float wradius = 25; 
-        float wx = wradius*cos(random(360));
-        float wy = wradius*sin(random(360));
-
-        desired.sub(new PVector(wx, wy));
-        desired.normalize();
-        desired.mult(maxspeed);
-
-    }
+    
+    
 
 }
 class Prey extends Animal {
@@ -317,7 +286,7 @@ class Prey extends Animal {
 
     }
     
-    // Our seek steering force algorithm
+    // Our flee steering force algorithm
     public void flee(Animal target) {
 
         desired = PVector.sub(target.location,location).mult(-1);

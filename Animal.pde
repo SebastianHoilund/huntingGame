@@ -1,6 +1,6 @@
 abstract class Animal {
 
-
+    // Her specificeres de variabler der skal bruges
     PVector location;
     PVector velocity;
     PVector acceleration;
@@ -27,18 +27,15 @@ abstract class Animal {
 
     }
 
-    void applyForce(PVector force) {
-
-        acceleration.add(force);
-
-    }
-
+    // Her kaldes de funktioner subclassesne skal bruge 
+    void wander() { }
     void seek(Animal target) {  }
     void flee(Animal target) {  }
     void move(Animal target) {  }
-    void wander() { }
+    void applyForce(PVector force) { acceleration.add(force); }
     boolean isEaten(Animal target) { return false; }
 
+    // Her tegnes dyrne, og værdierne (red, green, blue) bliver specificeret i subclasesne. 
     void display(int red, int green, int blue) {
 
         float theta = velocity.heading() + PI/2;

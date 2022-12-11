@@ -15,18 +15,14 @@ int timer = millis();
 int counter = 5000;
 
 int startingPrey = 5; 
-
 int maxPrey = 15;
+
 int hunterstartspeed = 3;
 int preystartspeed = 3;
-
-int hunterKills = 0;
 
 void setup() {
 
     fullScreen();
-    // size(1920,1080);
-    // size(640, 480);
 
     hunter = new Hunter(new PVector(width/2, height/2-350), 0.9, hunterstartspeed);
     
@@ -62,7 +58,6 @@ void draw() {
         if (newPrey.isEaten(hunter)) {
             wasEaten = true; 
             whoEaten = i;
-            // print(" " + i + " blev spist ");
         }
 
         close.set(i, dist(hunter.location.x, hunter.location.y, newPrey.location.x, newPrey.location.y));
@@ -81,7 +76,6 @@ void draw() {
 
             prey.add(new Prey(new PVector(random(width), random(height)), 0.9, preystartspeed));
 
-            // print(" " + prey.size() + " ");
             close.add(0.1);
             timer = millis(); 
 
