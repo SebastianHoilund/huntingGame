@@ -73,12 +73,6 @@ class Hunter extends Animal {
 
         } 
 
-        // if (hunting) {
-
-        // } else {
-            
-        // }
-
         noFill();
         circle(location.x, location.y, range);
 

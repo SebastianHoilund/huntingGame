@@ -9,7 +9,6 @@ abstract class Animal {
     int timer;
     int counter;
 
-    // Additional variable for size
     float r;
     float maxforce;
     float maxspeed;
@@ -19,7 +18,6 @@ abstract class Animal {
 
     boolean hunting;
 
-    // Our standard “Euler integration” motion model
     void update() {
 
         velocity.add(acceleration);
@@ -29,7 +27,6 @@ abstract class Animal {
 
     }
 
-    // Newton’s second law; we could divide by mass if we wanted.
     void applyForce(PVector force) {
 
         acceleration.add(force);
@@ -44,9 +41,6 @@ abstract class Animal {
 
     void display(int red, int green, int blue) {
 
-        // Vehicle is a triangle pointing in
-        // the direction of velocity; since it is drawn
-        // pointing up, we rotate it an additional 90 degrees.
         float theta = velocity.heading() + PI/2;
         fill(red, green, blue);
         stroke(0);

@@ -19,7 +19,7 @@ class Prey extends Animal {
 
     }
     
-    // Our seek steering force algorithm
+    // Our flee steering force algorithm
     void flee(Animal target) {
 
         desired = PVector.sub(target.location,location).mult(-1);
